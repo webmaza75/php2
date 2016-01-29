@@ -6,7 +6,9 @@ require_once __DIR__ . '/autoload.php';
 $news = App\Models\News::getLast(3);
 include(__DIR__ . './App/views/news/all.php');
 
-// Альтернативный вариант без использования метода getLast($limit)
+/** Альтернативный вариант без использования метода getLast($limit)
+* для сравнительно небольшого числа записей в таблице
+*/
 /*
 $news  = App\Models\News::findAll();
 $limit = 3;
