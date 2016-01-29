@@ -1,0 +1,42 @@
+/* Создание таблицы пользователей */
+CREATE TABLE `users`
+(`id` serial,
+`name` varchar(255),
+`email` varchar(255),
+PRIMARY KEY(`id`)
+);
+
+/* Вставка в таблицу users данных по первым двум пользователям */
+INSERT INTO `users` (`name`, `email`)
+VALUES
+('Иванов Сергей', 'test@tmp.ru'),
+('Алексеев Павел', 'test2@temp.com');
+
+/* Вставка данных для третьего пользователя */
+INSERT INTO `users` (`name`, `email`)
+VALUES
+('Иванов Константин', 'test_3m@tmp.ru');
+
+/** Тестирование методов execute($sql, $args = []) и
+* query($class, $sql, $args = []) класса App\Db
+* в файлах test_user_select.php и test_user_other.php
+*/
+
+/* Тестирование метода findById($id) абстрактного класса App\Model в файле find_by_id.php */
+
+/* Создание таблицы новостей */
+CREATE TABLE `news`
+(`id` serial,
+`title` varchar(255),
+`content` text,
+PRIMARY KEY(`id`)
+);
+
+/* Вставка тестовых данных для 5 новостей */
+INSERT INTO `news` (`title`, `content`)
+VALUES
+('Заголовок новости 1', 'Текст новости 1'),
+('Заголовок новости 2', 'Текст новости 2'),
+('Заголовок новости 3', 'Текст новости 3'),
+('Заголовок новости 4', 'Текст новости 4'),
+('Заголовок новости 5', 'Текст новости 5');
