@@ -2,20 +2,29 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Список новостей</title>
+    <link href="../../../css/style.css" rel="stylesheet">
+    <title>Админ-панель</title>
 </head>
 <body>
-
+<h1>Админ-панель</h1>
+<a class="link add" href="../../../article.php?act=add">Добавить новость</a><br>
+<table>
 <?php foreach ($news as $item): ?>
-    <div>
-        <h1>
-            <a href="../../../article.php?id=<?php echo $item->id; ?>">
-                <?php echo $item->title; ?>
-            </a>
-        </h1>
-        <div><?php echo $item->content; ?></div>
-    </div>
+        <tr>
+            <td>
+                <strong><?php echo $item->title; ?></strong>
+            </td>
+            <td class="td">
+                <a href="../../../article.php?id=<?php echo $item->id; ?>&act=view" class="view">Просмотреть</a>&nbsp;
+            </td>
+            <td class="td">
+                <a href="../../../article.php?id=<?php echo $item->id; ?>&act=edit" class="edit">Редактировать</a>&nbsp;
+            </td>
+            <td class="td">
+                <a href="../../../article.php?id=<?php echo $item->id; ?>&act=del" class="del">Удалить</a>
+            </td>
+        </tr>
 <?php endforeach; ?>
-
+</table>
 </body>
 </html>
