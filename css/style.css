@@ -35,8 +35,7 @@ td:first-child {
     text-decoration: underline;
 }
 .edit:hover,
-.del:hover,
-.view:hover {
+.del:hover {
     text-decoration: none;
 }
 .del {
@@ -44,9 +43,6 @@ td:first-child {
 }
 .edit {
     color: #006099;
-}
-.view {
-    color: #797979;
 }
 
 input[type="text"],
