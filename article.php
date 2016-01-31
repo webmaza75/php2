@@ -20,11 +20,16 @@ if (isset($_GET['id'])) {
         header('location: /'); // возврат на главную страницу
     } else {
         if(isset($_POST['edit'])) {
-            $news->id = $id;
-            $news->title = $_POST['title'];
-            $news->content = $_POST['content'];
-            $news->save();
-            header('location: /'); // возврат на главную страницу
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            if (trim($title) !== '' && trim($content) !== '') {
+                $news->id = $id;
+                $news->title = $_POST['title'];
+                $news->content = $_POST['content'];
+                $news->save();
+                header('location: /'); // возврат на главную страницу
+            }
+            include(__DIR__ . './App/views/news/edit.php');
         }
 
         if ($action == 'del') {
@@ -36,12 +41,19 @@ if (isset($_GET['id'])) {
 
     }
 } else {
-    if (isset($_POST['add'])) {
-        $news = new News();
-        $news->title = $_POST['title'];
-        $news->content = $_POST['content'];
-        $news->save();
-        header('location: /'); // возврат на главную страницу
+    if (isset($_POST['add']) && $_POST['title'] && $_POST['content']) {
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        if (trim($title) !== '' && trim($content) !== '') {
+            $news = new News();
+            $news->title = $_POST['title'];
+            $news->content = $_POST['content'];
+            $news->save();
+            header('location: /'); // возврат на главную страницу
+        } else {
+            include(__DIR__ . './App/views/news/add.php');
+        }
+
     }
 }
 
