@@ -15,9 +15,6 @@
                 <strong><?php echo $item->title; ?></strong>
             </td>
             <td class="td">
-                <a href="../../../article.php?id=<?php echo $item->id; ?>&act=view" class="view">Просмотреть</a>&nbsp;
-            </td>
-            <td class="td">
                 <a href="../../../article.php?id=<?php echo $item->id; ?>&act=edit" class="edit">Редактировать</a>&nbsp;
             </td>
             <td class="td">
