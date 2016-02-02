@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Админ-панель</h1>
-<a class="link add" href="/Controllers/add.php?act=add">Добавить новость</a><br>
+<a class="link add" href="/Controllers/edit.php">Добавить новость</a><br>
 <table>
 <?php foreach ($news as $item): ?>
         <tr>
@@ -15,10 +15,10 @@
                 <strong><?php echo $item->title; ?></strong>
             </td>
             <td class="td">
-                <a href="/Controllers/edit.php?id=<?php echo $item->id; ?>&act=edit" class="edit">Редактировать</a>&nbsp;
+                <a href="/Controllers/edit.php?id=<?php echo $item->id; ?>" class="edit">Редактировать</a>&nbsp;
             </td>
             <td class="td">
-                <a href="/Controllers/del.php?id=<?php echo $item->id; ?>&act=del" class="del">Удалить</a>
+                <a href="/Controllers/del.php?id=<?php echo $item->id; ?>" class="del">Удалить</a>
             </td>
         </tr>
 <?php endforeach; ?>
