@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Добавление новости</h1>
-<form method="post" action="/article.php">
+<form method="post">
     <label for="title">Заголовок</label>
     <input id="title" type="text" placeholder="Введите заголовок" name="title" required>
     <br>
