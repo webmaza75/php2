@@ -12,7 +12,6 @@ if (isset($_POST['id'])) {
 
 $news->title = $_POST['title'];
 $news->content = $_POST['content'];
-if ($news->save()) {
-    header('location: /');
-    exit;
-}
+$news->save();
+header('location: /');
+exit;
