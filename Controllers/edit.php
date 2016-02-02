@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../autoload.php';
 
-if (isset($_POST['edit']) && isset($_POST['title']) && isset($_POST['content'])) {
+if (isset($_POST['title']) && isset($_POST['content'])) {
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
     if ($title != '' && $content != '') {
