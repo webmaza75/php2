@@ -40,6 +40,6 @@ trait MagicFunc
      */
     public function __isset($k)
     {
-        return isset($this->data[$k]);
+        return array_key_exists($k, $this->data);
     }
 }
