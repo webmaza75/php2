@@ -28,7 +28,7 @@ class News extends Model
      */
     public function getAuthor($authorId)
     {
-        if (empty($authorId)) {
+        if (empty($authorId) || is_null($authorId)) {
             return false;
         }
         $id = (int)$authorId;
