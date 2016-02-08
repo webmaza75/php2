@@ -1,0 +1,37 @@
+/* Создание таблицы авторов */
+CREATE TABLE `authors`
+(`id` serial,
+`name` varchar(100) NOT NULL,
+PRIMARY KEY(`id`)
+);
+
+/* Изменение таблицы news, добавление поля author_id */
+ALTER TABLE `news`
+ADD COLUMN `author_id` bigint UNSIGNED NOT NULL;
+
+/* Добавление индекса в таблицу news */
+ALTER TABLE `news` ADD INDEX idx_author (`author_id`);
+
+/* Создание внешнего ключа */
+ALTER TABLE  `news`
+ADD CONSTRAINT  `fk_author_id`
+FOREIGN KEY (`author_id`) REFERENCES
+`php2`.`authors` (`id`)
+ON DELETE RESTRICT
+ON UPDATE CASCADE;
+
+/* Заполнение данными таблицы authors */
+INSERT INTO `authors`
+(`name`)
+VALUES
+('Петров'),
+('Григорьев'),
+('Соловьева');
+
+/* Заполнение данными таблицы news */
+INSERT INTO `news`
+(`title`, `content`, `author_id`)
+VALUES
+('Заголовок 1', 'Контент 1', 1),
+('Заголовок 2', 'Контент 2', 2),
+('Заголовок 3', 'Контент 3', 3);
