@@ -2,27 +2,42 @@
 
 namespace App;
 
-//use \PDO;
-
-abstract class Model //implements \Countable
+/**
+ * Class Model abstract class
+ * @package App
+ */
+abstract class Model
 {
+    /**
+     * Имя таблицы (переопределяется в классах-наследниках)
+     */
     const TABLE = '';
 
+    /**
+     * @var integer $id id записи
+     */
     public $id;
 
-    // Получить все записи из требуемой таблицы
+    /**
+     * Получить все записи из требуемой таблицы
+     * @return mixed
+     */
     public static function findAll()
     {
         $db = new Db();
         return $db->query(static::class, 'SELECT * FROM ' . static::TABLE . ';');
     }
 
-    // Получение одной записи из нужной таблицы по ее id
+    /**
+     * Получение одной записи из нужной таблицы по ее id
+     * @param integer $id id записи
+     * @return mixed (bool|object)
+     */
     public static function findById($id)
     {
         $db = new Db();
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE `id`=:id;';
-        $args = [':id' => $id];
+        $args = [':id' => (int)$id];
         $res = $db->query(static::class, $sql, $args);
         if (!$res) {
             return false;
@@ -30,11 +45,15 @@ abstract class Model //implements \Countable
         return $res[0]; // возвращаем сразу объект
     }
 
-    // Получение последних ($limit) записей (сортировка по id)
+    /**
+     * Получение последних ($limit) записей (сортировка по id)
+     * @param integer $limit необходимое количество записей
+     * @return mixed (bool|array)
+     */
     public static function getLast($limit)
     {
-        $db = new Db();
-        $sql = 'SELECT * FROM ' . static::TABLE . ' ORDER BY `id` DESC LIMIT ' .$limit. ';';
+        $db = Db::instance();
+        $sql = 'SELECT * FROM ' . static::TABLE . ' ORDER BY `id` DESC LIMIT ' . (int)$limit . ';';
         $res = $db->query(static::class, $sql);
         if (!$res) {
             return false;
@@ -42,11 +61,19 @@ abstract class Model //implements \Countable
         return $res;
     }
 
+    /**
+     * Проверка, новый ли объект (есть ли соответствующая запись в БД)
+     * @return bool
+     */
     public function isNew()
     {
         return empty($this->id);
     }
 
+    /**
+     * Метод вставки новой записи об объекте в БД
+     * @return bool
+     */
     public function insert()
     {
         $columns = [];
@@ -74,18 +101,21 @@ abstract class Model //implements \Countable
         return $res;
     }
 
+    /**
+     * Обновление записи в БД об объекте
+     * @return bool
+     */
     public function update()
     {
         $args = [];
         $keys = [];
         $sql = 'UPDATE ' . static::TABLE . ' SET ';
         foreach ($this as $k => $v) {
+            $args[':'.$k] = $v; // берем значение только для подстановки
             if ('id' == $k) { // если это свойство id
-                $args[':'.$k] = $v; // берем значение только для подстановки
                 continue;
             }
             $keys[] = $k . '=:' . $k;
-            $args[':'.$k] = $v;
         }
 
         $sql .= implode(', ', $keys) . ' WHERE id=:id;';
@@ -94,6 +124,10 @@ abstract class Model //implements \Countable
         return $res;
     }
 
+    /**
+     * Выбор режима добавления или редактирования записи об объекте в БД
+     * @return bool
+     */
     public function save()
     {
         // регистронезависимый поиск слова insert в начале строки запроса
@@ -109,6 +143,10 @@ abstract class Model //implements \Countable
         return $res;
     }
 
+    /**
+     * Удаление записи об объекте из БД
+     * @return bool
+     */
     public function delete()
     {
         $sql = 'DELETE FROM ' . static::TABLE . '  WHERE id=:id;';
