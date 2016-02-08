@@ -4,10 +4,14 @@ use App\Models\News;
 
 require_once __DIR__ . '/../autoload.php';
 
+$view = new \App\View();
+
 if (!isset($_GET['id'])) {
-    $news = new News();
+    $view->news = new News();
+    $view->title = 'Добавление новости';
 } else {
-    $id = (int)$_GET['id'];
-    $news = App\Models\News::findById((int)$_GET['id']);
+    $view->news = App\Models\News::findById((int)$_GET['id']);
+    $view->title = 'Редактирование новости';
 }
-include(__DIR__ . '/../App/views/news/edit.php');
+
+$view->display(__DIR__ . '/../App/templates/edit.php');
