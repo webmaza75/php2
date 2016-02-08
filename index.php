@@ -1,7 +1,11 @@
 <?php
-// Подключение файла автозагрузки
+/**
+ * Подключение файла автозагрузки
+ */
 require_once __DIR__ . '/autoload.php';
 
-// Получение трех последних новостей
-$news = App\Models\News::getLast(3);
-include(__DIR__ . './App/views/news/all.php');
+$view = new \App\View();
+$view->title = 'Админ-панель';
+$view->news = \App\Models\News::findAll();
+$view->authors = \App\Models\Author::findAll();
+$view->display(__DIR__ . '/App/templates/news.php');
