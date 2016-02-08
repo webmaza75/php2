@@ -33,10 +33,9 @@ class News extends Model
         }
         $id = (int)$authorId;
         $db = Db::instance();
-        $author = new Author();
         $args = [':id' => $id];
-        $sql = 'SELECT * FROM ' . $author::TABLE . ' WHERE `id`=:id;';
-        $res = $db->query('\App\Models\Author', $sql, $args);
+        $sql = 'SELECT * FROM ' . \App\Models\Author::TABLE . ' WHERE `id`=:id;';
+        $res = $db->query(\App\Models\Author::class, $sql, $args);
         if (!$res) {
             return false;
         }
