@@ -6,12 +6,11 @@ namespace App\Models;
 use App\Model;
 
 /**
- * Class User
+ * Модель User для таблицы "users"
  * @package App\Models
- * @var string $name User name
- * @var string $email email address
+ * @property string $name User name
+ * @property string $email email address
  */
-
 class User extends Model implements HasEmail
 {
     /**

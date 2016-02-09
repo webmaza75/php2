@@ -6,8 +6,11 @@ use App\Model;
 use App\MagicFunc;
 
 /**
- * Class Author класс автора
+ * Модель Author для таблицы "authors"
  * @package App\Models
+ *
+ * @property integer $id
+ * @property string $name
  */
 class Author extends Model
 {

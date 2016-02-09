@@ -4,9 +4,15 @@ namespace App\Models;
 
 use App\Model;
 
+
 /**
- * Class News класс новости
- * @package App\Models
+ * Модель News для таблицы "news"
+ *
+ * @property integer $id
+ * @property string $title
+ * @property string $text
+ * @property integer $author_id
+ * @property-read Author $author
  */
 class News extends Model
 {
