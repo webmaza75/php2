@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\MagicFunc;
 use App\Model;
-use App\Db;
 
 /**
  * Class News класс новости
@@ -13,9 +11,30 @@ use App\Db;
 class News extends Model
 {
     /**
-     * Используется трейт с магическими функциями
+     * @var array $data Array of Properties
      */
-    use MagicFunc;
+    protected $data = [];
+
+    /**
+     * Магический метод добавления несуществующего свойства объекта
+     * @param mixed $k Property name
+     * @param mixed $v Property value
+     */
+    public function __set($k, $v)
+    {
+        $this->data[$k] = $v;
+    }
+
+    /**
+     * Проверка на существование свойства объекта по его имени (ключу)
+     * @param mixed $k Property name
+     * @return bool
+     */
+    public function __isset($k)
+    {
+        return array_key_exists($k, $this->data);
+    }
+
     /**
      * Table name имя таблицы
      */
@@ -24,21 +43,18 @@ class News extends Model
     /**
      * Метод получения имени автора новости по его id
      * @param integer $authorId Id of the author
-     * @return mixed (bool|string)
+     * @return mixed (bool|string|object)
      */
-    public function getAuthor($authorId)
+    public function __get($k)
     {
-        if (empty($authorId) || is_null($authorId)) {
-            return false;
+        if ($k == 'author') {
+            if (empty($this->author_id) || is_null($this->author_id)) {
+                return false;
+            }
+            return Author::findById($this->author_id);
         }
-        $id = (int)$authorId;
-        $db = Db::instance();
-        $args = [':id' => $id];
-        $sql = 'SELECT * FROM ' . \App\Models\Author::TABLE . ' WHERE `id`=:id;';
-        $res = $db->query(\App\Models\Author::class, $sql, $args);
-        if (!$res) {
-            return false;
+        else {
+            return $this->data[$k];
         }
-        return $res[0]->name;
     }
 }
