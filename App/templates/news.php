@@ -70,11 +70,10 @@
             </h3>
         </div>
         <div class="panel-body"> Автор:
-            <?php
-            if ($item->author !== false) : ?>
-               <?php echo $item->author->name; ?>
-            <?php else : ?>
-                не указан
+            <?php if (!empty($item->author)) : ?>
+                <?php echo $item->author->name; ?>
+                <?php else : ?>
+                    не указан
             <?php endif; ?>
 
             <div class="pull-right">
