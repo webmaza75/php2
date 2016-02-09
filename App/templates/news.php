@@ -71,8 +71,8 @@
         </div>
         <div class="panel-body"> Автор:
             <?php
-            if (isset($item->author_id) && !empty($item->author_id)) : ?>
-               <?php echo $item->getAuthor($item->author_id); ?>
+            if ($item->author !== false) : ?>
+               <?php echo $item->author->name; ?>
             <?php else : ?>
                 не указан
             <?php endif; ?>
