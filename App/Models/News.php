@@ -30,10 +30,20 @@ class News extends Model
      * @param mixed $k Property name
      * @return bool
      */
+
     public function __isset($k)
     {
-        return array_key_exists($k, $this->data);
+        if ($k == 'author') {
+            if (empty($this->author_id) || is_null($this->author_id)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return array_key_exists($k, $this->data);
+        }
     }
+
 
     /**
      * Table name имя таблицы
@@ -48,9 +58,6 @@ class News extends Model
     public function __get($k)
     {
         if ($k == 'author') {
-            if (empty($this->author_id) || is_null($this->author_id)) {
-                return false;
-            }
             return Author::findById($this->author_id);
         }
         else {
