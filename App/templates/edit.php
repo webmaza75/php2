@@ -34,11 +34,7 @@
             <div class="col-sm-10">
                 <input class="form-control none-indent" id="author" name="author"
                      type="text" placeholder="Введите автора"
-                     <?php $str = ''; ?>
-                     <?php if (isset($news->author_id) && !empty($news->author_id)) : ?>
-                         <?php $str = $news->getAuthor($news->author_id); ?>
-                     <?php endif; ?>
-                     <?php $str = (false === $str) ? '' : $str; ?>
+                     <?php $str = (false === $news->author) ? '' : $news->author->name; ?>
                      value="<?php echo $str; ?>" required>
             </div>
         </div>
