@@ -4,8 +4,15 @@
  */
 require_once __DIR__ . '/autoload.php';
 
-$view = new \App\View();
-$view->title = 'Админ-панель';
-$view->news = \App\Models\News::findAll();
-$view->authors = \App\Models\Author::findAll();
-$view->display(__DIR__ . '/App/templates/news.php');
+
+//echo $url = $_SERVER['REQUEST_URI'];
+//$arr = ['news', 'admin'];
+//$getCtrl = strtolower($_GET['ctrl']);
+
+$ctrl = '\App\Controllers\\';
+//$ctrl .= (!empty($_GET['ctrl']) && in_array($_GET['ctrl'], $arr)) ? $_GET['ctrl'] : 'News';
+$ctrl .= (!empty($_GET['ctrl'])) ? $_GET['ctrl'] : 'News';
+
+$controller = new $ctrl();
+$action = $_GET['act'] ?: 'Index';
+$controller->action($action);
