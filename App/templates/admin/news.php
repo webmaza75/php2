@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><?php echo $title; ?></title>
+    <title>Админ-панель</title>
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -19,40 +19,9 @@
 </head>
 <body>
 <div class="container">
-<h1><?php echo $title; ?></h1>
-<table class="table table-hover">
-    <caption>Авторы</caption>
-    <?php foreach($this->authors as $key => $value) : ?>
-        <tr>
-            <?php if (!is_object($value) && !is_array($value)) : ?>
-                <?php continue; ?>
-            <?php endif; ?>
-            <td>
-                <?php echo ++$key . '). '; ?>
-            </td>
-            <?php $iter = new App\MyIterator($value);
-
-            foreach ($iter as $k => $v) :
-                if (!is_object($v) && !is_array($v)) : ?>
-                    <td>
-                        <?php echo $k . ' = ' . $v . '; '; ?>
-                    </td>
-                    <?php continue;
-                endif;
-
-                $iter2 = new App\MyIterator($v);
-
-                foreach ($iter2 as $k2 => $v2) : ?>
-                    <td>
-                        <?php echo $k2 . ' = ' . $v2 . '; '; ?>
-                    </td>
-                <?php endforeach; ?>
-            <?php endforeach; ?>
-        </tr>
-    <?php endforeach; ?>
-</table>
+<h1>Админ-панель</h1>
 <div>
-    <a class="btn btn-success" aria-label="Left Align" href="/Controllers/edit.php">
+    <a class="btn btn-success" aria-label="Left Align" href="/?ctrl=Admin&act=Edit">
         <span class="glyphicon glyphicon-plus"> Добавить новость</span>
     </a>
 </div><br>
@@ -77,10 +46,10 @@
             <?php endif; ?>
 
             <div class="pull-right">
-                <a class="btn btn-sm btn-primary" aria-label="Left Align" href="/Controllers/edit.php?id=<?php echo $item->id; ?>" class="edit">
+                <a class="btn btn-sm btn-primary" aria-label="Left Align" href="/?ctrl=Admin&act=Edit&id=<?php echo $item->id; ?>">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" aria-label="Left Align" href="/Controllers/del.php?id=<?php echo $item->id; ?>" class="del">
+                <a class="btn btn-sm btn-danger" aria-label="Left Align" href="/?ctrl=Admin&act=Delete&id=<?php echo $item->id; ?>">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
             </div>

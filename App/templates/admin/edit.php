@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><?php echo $title; ?></title>
+    <title>Редактирование новости</title>
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -19,10 +19,10 @@
 </head>
 <body>
 <div class="container">
-    <h1><?php echo $title; ?></h1>
+    <h1>Редактирование новости</h1>
     <br>
 
-    <form class="form-horizontal" action="/Controllers/save.php" method="post">
+    <form class="form-horizontal" action="/?ctrl=Admin&act=Save" method="post">
         <div class="form-group">
             <label class="col-sm-2" for="title">Заголовок</label>
             <div class="col-sm-10">
@@ -34,8 +34,9 @@
             <div class="col-sm-10">
                 <input class="form-control none-indent" id="author" name="author"
                      type="text" placeholder="Введите автора"
-                     <?php $str = (false === $news->author) ? '' : $news->author->name; ?>
-                     value="<?php echo $str; ?>" required>
+                     <?php $str = (empty($news->author)) ? '' : $news->author->name; ?>
+                     value="<?php echo $str; ?>">
+                <input type="hidden" id="author_id" name="author_id" value="<?php echo $news->author_id; ?>">
             </div>
         </div>
         <div class="form-group">
@@ -54,7 +55,7 @@
     </form>
 
     <br>
-    <a class="btn btn-success" href="/">На главную</a>
+    <a class="btn btn-success" href="/?ctrl=Admin">На главную</a>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

@@ -19,31 +19,32 @@
 </head>
 <body>
 <div class="container">
-    <h1>Все новости</h1><br>
-    <?php foreach ($news as $item) : ?>
+    <h1>Просмотр новости</h1><br>
 
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <a href="/?act=One&id=<?php echo $item->id; ?>">
-                        <?php if (!empty($item->title)) : ?>
-                            <?php echo $item->title; ?>
-                        <?php else : ?>
-                            -= Без заголовка =-
-                        <?php endif; ?>
-                    </a>
-                </h3>
-            </div>
-            <div class="panel-body"> Автор:
-                <?php if (!empty($item->author)) : ?>
-                    <?php echo $item->author->name; ?>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                    <?php if (!empty($news->title)) : ?>
+                        <?php echo $news->title; ?>
+                    <?php else : ?>
+                        -= Без заголовка =-
+                    <?php endif; ?>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <small>Автор:
+                <?php if (!empty($news->author)) : ?>
+                    <?php echo $news->author->name; ?>
                 <?php else : ?>
                     не указан
                 <?php endif; ?>
+            </small>
+            <div>
+                <?php echo $news->content; ?>
             </div>
         </div>
-
-    <?php endforeach; ?>
+    </div>
+    <a class="btn btn-success" href="/">На главную</a>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
