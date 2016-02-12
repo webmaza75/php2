@@ -6,15 +6,11 @@ namespace App;
 /**
  * Class View класс представления
  * @package App
+ * @property array $data массив свойств
  */
 class View implements \Countable, \ArrayAccess
 {
     protected $data =[];
-    /**
-     * Использует трейт с магическими функциями,
-     * трейт использовался до реализации интерфейса ArrayAccess
-     */
-    //use MagicFunc;
 
     /**
      * Формирование контента страницы для вывода в браузере
@@ -24,11 +20,7 @@ class View implements \Countable, \ArrayAccess
     public function render($template)
     {
         ob_start();
-        /*
-        foreach ($this->data as $prop => $value) {
-            $$prop = $value;
-        }
-        */
+
         foreach ($this as $prop => $value) {
             $$prop = $value;
         }
