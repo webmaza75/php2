@@ -22,13 +22,26 @@ class News extends Model
     protected $data = [];
 
     /**
-     * Магический метод добавления несуществующего свойства объекта
-     * @param mixed $k Property name
-     * @param mixed $v Property value
+     * Table name имя таблицы
      */
-    public function __set($k, $v)
+    const TABLE = 'news';
+
+    /**
+     * LAZY LOAD
+     *
+     * @param $k
+     * @return mixed (null|object)
+     */
+
+    public function __get($k)
     {
-        $this->data[$k] = $v;
+        switch ($k) {
+            case 'author':
+                return Author::findById($this->author_id);
+                break;
+            default:
+                return null;
+        }
     }
 
     /**
@@ -36,38 +49,14 @@ class News extends Model
      * @param mixed $k Property name
      * @return bool
      */
-
     public function __isset($k)
     {
-        if ($k == 'author') {
-            if (empty($this->author_id) || is_null($this->author_id)) {
+        switch ($k) {
+            case 'author':
+                return !empty($this->author_id);
+                break;
+            default:
                 return false;
-            } else {
-                return true;
-            }
-        } else {
-            return array_key_exists($k, $this->data);
-        }
-    }
-
-
-    /**
-     * Table name имя таблицы
-     */
-    const TABLE = 'news';
-
-    /**
-     * Метод получения имени автора новости по его id
-     * @param integer $authorId Id of the author
-     * @return mixed (bool|string|object)
-     */
-    public function __get($k)
-    {
-        if ($k == 'author') {
-            return Author::findById($this->author_id);
-        }
-        else {
-            return $this->data[$k];
         }
     }
 }
