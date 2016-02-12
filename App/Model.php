@@ -79,9 +79,10 @@ abstract class Model
         $columns = [];
         $values = [];
         foreach ($this as $k => $v) {
-            if ('id' == $k) {
+            if ('id' == $k || 'data' == $k) {
                 continue;
             }
+
             $columns[] = $k;
             $values[':'.$k] = $v;
         }
@@ -91,6 +92,7 @@ abstract class Model
             VALUES
             (' . implode(',', array_keys($values)) . ')
         ';
+
         $db = Db::instance();
         $res = $db->execute($sql, $values);
 
@@ -111,14 +113,20 @@ abstract class Model
         $keys = [];
         $sql = 'UPDATE ' . static::TABLE . ' SET ';
         foreach ($this as $k => $v) {
-            $args[':'.$k] = $v; // берем значение только для подстановки
+
             if ('id' == $k) { // если это свойство id
+                $args[':'.$k] = $v; // берем значение только для подстановки
+                continue;
+            }
+            if ('data' == $k) {
                 continue;
             }
             $keys[] = $k . '=:' . $k;
+            $args[':'.$k] = $v; // берем значение только для подстановки
         }
 
         $sql .= implode(', ', $keys) . ' WHERE id=:id;';
+        //echo $sql; die;
         $db = Db::instance();
         $res = $db->execute($sql, $args);
         return $res;
