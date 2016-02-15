@@ -23,7 +23,7 @@
     <br>
 
    <!-- <form class="form-horizontal" action="/?ctrl=Admin&act=Save" method="post">-->
-    <form class="form-horizontal" action="?ctrl=admin&act=save" method="post">
+    <form class="form-horizontal" action="/<?php echo $ctrl; ?>/save" method="post">
         <div class="form-group">
             <label class="col-sm-2" for="title">Заголовок</label>
             <div class="col-sm-10">
@@ -57,7 +57,7 @@
 
     <br>
     <!--<a class="btn btn-success" href="/?ctrl=Admin">На главную</a>-->
-    <a class="btn btn-success" href="/?ctrl=admin&act=index">На главную</a>
+    <a class="btn btn-success" href="/<?php echo $ctrl; ?>/index">На главную</a>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

@@ -4,15 +4,41 @@
  */
 require_once __DIR__ . '/autoload.php';
 
+// контроллер и action по умолчанию
+$ctrl = 'app\controllers\news';
 
-//echo $url = $_SERVER['REQUEST_URI'];
-//$arr = ['news', 'admin'];
-//$getCtrl = strtolower($_GET['ctrl']);
+// короткий вариант
+//$control = 'news';
+$action = 'index';
 
-$ctrl = '\App\Controllers\\';
-//$ctrl .= (!empty($_GET['ctrl']) && in_array($_GET['ctrl'], $arr)) ? $_GET['ctrl'] : 'News';
-$ctrl .= (!empty($_GET['ctrl'])) ? $_GET['ctrl'] : 'News';
+// для админ-панели $control = 'admin'; $action = 'index';
 
+// любой URI (не корень сайта)
+if ($_SERVER['REQUEST_URI'] != '/') {
+    // ?param=value
+    $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    // Разбиение URL на массив по символу "/"
+    $uri_parts = explode('/', trim($url_path, ' /'));
+
+/* для варианта чпу без пространства имен (короткое имя контроллера)
+    if (count($uri_parts) % 2) { // =1 (true), т.е. нечетное число
+        $control = 'news';
+        $action = '404';
+    } else {
+        $control = array_shift($uri_parts); // имя контроллера
+        $action = array_shift($uri_parts); // имя action
+
+    }
+*/
+    /* для неограниченной длины пространства имен контроллера */
+    $action = array_pop($uri_parts); // имя action (последний элемент массива)
+
+    $ctrl = '\\' . implode('\\', $uri_parts);
+}
+
+// для короткого варианта именования контроллера (admin, news)
+//$ctrl = '\App\Controllers\\' . $control;
 $controller = new $ctrl();
-$action = $_GET['act'] ?: 'Index';
 $controller->action($action);
+

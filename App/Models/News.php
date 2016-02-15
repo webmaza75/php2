@@ -59,4 +59,46 @@ class News extends Model
                 return false;
         }
     }
+
+    /**
+     * @param array $arr - $_POST из формы редактирования
+     * @return $this|bool
+     */
+    public function setFromForm($arr)
+    {
+        foreach ($arr as $k => $v) {
+            $k = trim($k);
+            $v = trim($v);
+
+            switch ($k) {
+                case ('id'):
+                    $this->$k = (int)$v;
+                    break;
+                case ('author'):
+                    if (!empty($v) && is_numeric($v)) {
+                        $auth = \App\Models\Author::findById($v);
+                        if ($auth) {
+                            $this->author_id = $v;
+                        } else {
+                            return false;
+                        }
+                    }
+
+                    if (!empty($v) && !is_numeric($v)) {
+                        return false;
+                    }
+
+                    if (empty($v)) {
+                        $this->author_id = null;
+                    }
+
+                    break;
+                case ('title'):
+                case ('content'):
+                    $this->$k = !empty($v) ? $v : null;
+                    break;
+            }
+        }
+        return $this;
+    }
 }

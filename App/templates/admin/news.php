@@ -21,7 +21,7 @@
 <div class="container">
 <h1>Админ-панель</h1>
 <div>
-    <a class="btn btn-success" aria-label="Left Align" href="?ctrl=admin&act=edit">
+    <a class="btn btn-success" aria-label="Left Align" href="/<?php echo $ctrl; ?>/edit">
         <span class="glyphicon glyphicon-plus"> Добавить новость</span>
     </a>
 </div><br>
@@ -46,10 +46,10 @@
             <?php endif; ?>
 
             <div class="pull-right">
-                <a class="btn btn-sm btn-primary" aria-label="Left Align" href="/?ctrl=admin&act=edit&id=<?php echo $item->id; ?>">
+                <a class="btn btn-sm btn-primary" aria-label="Left Align" href="/<?php echo $ctrl; ?>/edit?id=<?php echo $item->id; ?>">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" aria-label="Left Align" href="?ctrl=admin&act=delete&id=<?php echo $item->id; ?>">
+                <a class="btn btn-sm btn-danger" aria-label="Left Align" href="/<?php echo $ctrl; ?>/delete?id=<?php echo $item->id; ?>">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
             </div>

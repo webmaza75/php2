@@ -126,7 +126,6 @@ abstract class Model
         }
 
         $sql .= implode(', ', $keys) . ' WHERE id=:id;';
-        //echo $sql; die;
         $db = Db::instance();
         $res = $db->execute($sql, $args);
         return $res;
