@@ -25,7 +25,7 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <a href="/?act=One&id=<?php echo $item->id; ?>">
+                    <a href="/?ctrl=news&act=one&id=<?php echo $item->id; ?>">
                         <?php if (!empty($item->title)) : ?>
                             <?php echo $item->title; ?>
                         <?php else : ?>

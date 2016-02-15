@@ -22,7 +22,8 @@
     <h1>Редактирование новости</h1>
     <br>
 
-    <form class="form-horizontal" action="/?ctrl=Admin&act=Save" method="post">
+   <!-- <form class="form-horizontal" action="/?ctrl=Admin&act=Save" method="post">-->
+    <form class="form-horizontal" action="?ctrl=admin&act=save" method="post">
         <div class="form-group">
             <label class="col-sm-2" for="title">Заголовок</label>
             <div class="col-sm-10">
@@ -49,13 +50,14 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <?php if ($news->id) { echo '<input type="hidden" name="id" value="' . $news->id .'">'; } ?>
 
-                <input name="edit" type="submit" value="Сохранить">
+                <input type="submit" value="Сохранить">
             </div>
         </div>
     </form>
 
     <br>
-    <a class="btn btn-success" href="/?ctrl=Admin">На главную</a>
+    <!--<a class="btn btn-success" href="/?ctrl=Admin">На главную</a>-->
+    <a class="btn btn-success" href="/?ctrl=admin&act=index">На главную</a>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
