@@ -16,7 +16,6 @@ class Admin extends Controller
     protected function actionIndex()
     {
         $this->view->news = \App\Models\News::findAll();
-        $this->view->ctrl = __CLASS__;
         $this->view->display(__DIR__ . '/../templates/admin/news.php');
     }
 
@@ -24,7 +23,6 @@ class Admin extends Controller
     {
         $news = \App\Models\News::findById($_GET['id']);
         $news->delete();
-        $this->view->ctrl = __CLASS__;
         $this->actionIndex();
     }
 
@@ -35,24 +33,23 @@ class Admin extends Controller
         } else {
             $this->view->news = \App\Models\News::findById($_GET['id']);
         }
-        $this->view->ctrl = __CLASS__;
         $this->view->display(__DIR__ . '/../templates/admin/edit.php');
     }
 
     protected function actionSave()
     {
         if (isset($_POST['id'])) {
-            $this->view->news = \App\Models\News::findById((int)$_POST['id']);
+            $news = \App\Models\News::findById((int)$_POST['id']);
         } else {
-            $this->view->news = new \App\Models\News();
+            $news = new \App\Models\News();
         }
-        $this->view->news->setFromForm($_POST);
-        $this->view->ctrl = __CLASS__;
+        $news->setFromForm($_POST);
 
-        if ($this->view->news) {
-            $this->view->news->save();
+        if ($news) {
+            $news->save();
             $this->actionIndex();
         } else {
+            $this->view->news = $news;
             $this->view->display(__DIR__ . '/../templates/admin/edit.php');
         }
     }
