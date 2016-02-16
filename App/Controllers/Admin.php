@@ -47,7 +47,8 @@ class Admin extends Controller
 
         if ($news) {
             $news->save();
-            $this->actionIndex();
+            header('Location: /admin/index');
+            exit;
         } else {
             $this->view->news = $news;
             $this->view->display(__DIR__ . '/../templates/admin/edit.php');
