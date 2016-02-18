@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controller;
-//use App\Models\Author;
+
 
 /**
  * Class Admin
@@ -23,7 +23,8 @@ class Admin extends Controller
     {
         $news = \App\Models\News::findById($_GET['id']);
         $news->delete();
-        $this->actionIndex();
+        header('Location: /admin/index');
+        exit;
     }
 
     protected function actionEdit()
@@ -32,24 +33,29 @@ class Admin extends Controller
             $this->view->news = new \App\Models\News();
         } else {
             $this->view->news = \App\Models\News::findById($_GET['id']);
+            /*
+            if (!$this->view->news) {
+                throw new \App\Exceptions\Err404('Запись не найдена');
+            }
+            */
         }
         $this->view->display(__DIR__ . '/../templates/admin/edit.php');
     }
 
     protected function actionSave()
     {
-        if (isset($_POST['id'])) {
-            $news = \App\Models\News::findById((int)$_POST['id']);
-        } else {
-            $news = new \App\Models\News();
-        }
-        $news->setFromForm($_POST);
-
-        if ($news) {
+        try {
+            if (isset($_POST['id'])) {
+                $news = \App\Models\News::findById($_POST['id']);
+            } else {
+                $news = new \App\Models\News();
+            }
+            $news->fill($_POST);
             $news->save();
             header('Location: /admin/index');
             exit;
-        } else {
+        } catch (\App\MultiException $e) {
+            $this->view->errors = $e;
             $this->view->news = $news;
             $this->view->display(__DIR__ . '/../templates/admin/edit.php');
         }

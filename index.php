@@ -4,47 +4,53 @@
  */
 require_once __DIR__ . '/autoload.php';
 
-// контроллер и action по умолчанию
-//$ctrl = 'app\controllers\news';
-
-// короткий вариант
 $control = 'news';
 $action = 'index';
 
-// для админ-панели $control = 'admin'; $action = 'index';
-
 // любой URI (не корень сайта)
-if ($_SERVER['REQUEST_URI'] != '/') {
-    // ?param=value
-    $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+try {
+    if ($_SERVER['REQUEST_URI'] != '/') {
+        // ?param=value
+        $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    // Разбиение URL на массив по символу "/"
-    $uri_parts = explode('/', trim($url_path, ' /'));
+        // Разбиение URL на массив по символу "/"
+        $uri_parts = explode('/', trim($url_path, ' /'));
 
-/* для варианта чпу без пространства имен (короткое имя контроллера) */
-    if (count($uri_parts) % 2) { // =1 (true), т.е. нечетное число
-        $control = 'news';
-        $action = '404';
-    } else {
         $control = array_shift($uri_parts); // имя контроллера
-        $action = array_shift($uri_parts); // имя action
+        if (count($uri_parts) >=1) {
+            $action = (array_shift($uri_parts)); // имя action
+        }
+    }
+    $ctrl = '\App\Controllers\\' . $control;
+
+    if (!class_exists($ctrl)) {
+        throw new \App\Exceptions\Err404('Неверный адрес. Попробуйте еще раз');
+    }
+    $controller = new $ctrl();
+
+    if (!method_exists($controller, 'action' . $action)) {
+        throw new BadMethodCallException('Несуществующий адрес. Попробуйте еще раз');
     }
 
-    $ctrl = '\\' . implode('\\', $uri_parts);
+    $controller->action($action);
+
+} catch (\App\Exceptions\DB $e) {
+    $err = new \App\Controllers\Error();
+    $err->actionDbError($e->getMessage());
+} catch (\App\Exceptions\Err404 $e) {
+    $err = new \App\Controllers\Error();
+    $err->action404($e->getMessage());
+} catch (\BadMethodCallException $e) {
+    $err = new \App\Controllers\Error();
+    $err->action404($e->getMessage());
 }
 
-// для короткого варианта именования контроллера (admin, news)
-$ctrl = '\App\Controllers\\' . $control;
-$controller = new $ctrl();
-$controller->action($action);
+
 /*
-try {
-    $controller->action($action);
-} catch (\App\Exceptions\Core $e) {
-    echo 'Возникло исключение приложения: ' . $e->getMessage();
-} catch (PDOException $e) {
-    echo 'Что-то не так с базой';
-}
+finally {
+
 */
+    /*Logger::instance()->save($e->getMessage());*/
+//}
 
 

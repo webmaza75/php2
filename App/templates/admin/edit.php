@@ -19,6 +19,14 @@
 </head>
 <body>
 <div class="container">
+    <?php if ($errors) : ?>
+    <?php foreach ($errors as $error): ?>
+        <div class="alert alert-danger">
+            <?php echo $error->getMessage(); ?>
+        </div>
+    <?php endforeach; ?>
+    <?php endif; ?>
+
     <h1>Редактирование новости</h1>
     <br>
 
@@ -27,7 +35,7 @@
         <div class="form-group">
             <label class="col-sm-2" for="title">Заголовок</label>
             <div class="col-sm-10">
-              <input class="form-control" id="title" name="title" type="text" placeholder="Введите заголовок" value="<?php echo $news->title; ?>" required>
+              <input class="form-control" id="title" name="title" type="text" placeholder="Введите заголовок" value="<?php echo $news->title; ?>" >
             </div>
         </div>
         <div class="form-group">
@@ -43,7 +51,7 @@
         <div class="form-group">
             <label class="col-sm-2" for="content">Текст</label>
             <div class="col-sm-10">
-              <textarea class="form-control" id=content" name="content" cols="100" rows="10" placeholder="Введите текст" required><?php echo $news->content; ?></textarea>
+              <textarea class="form-control" id=content" name="content" cols="100" rows="10" placeholder="Введите текст" ><?php echo $news->content; ?></textarea>
             </div>
         </div>
         <div class="form-group">

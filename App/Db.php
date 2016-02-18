@@ -18,8 +18,11 @@ class Db
 
     /**
      * @var \PDO - объект PDO, предоставляющий соединение с БД
+     * @var string DbName - для получения столбцов из таблиц БД полей,
+     * которые заданы как Not Null (предполагается использовать в Model)
      */
     protected $dbh;
+    protected static $DbName;
 
     /**
      * Создание объекта подключения к БД
@@ -33,10 +36,19 @@ class Db
             ';dbname=' .
             $config->data['db']['dbname'];
 
+        self::$DbName = $config->data['db']['dbname'];
+
         $param2 = $config->data['db']['login'];
         $param3 = $config->data['db']['pass'];
-
-        $this->dbh = new \PDO($param1, $param2, $param3);
+        try {
+            $this->dbh = new \PDO($param1, $param2, $param3);
+        } catch (\PDOException $e) {
+            throw new \App\Exceptions\DB('Некорректные параметры подключения к БД');
+        }
+    }
+    public function getDbName()
+    {
+        return self::$DbName;
     }
 
     /**
@@ -66,6 +78,7 @@ class Db
     public function query($class, $sql, $args = [])
     {
         $sth = $this->dbh->prepare($sql);
+
         if (!$args) { // если массив с параметрами для запроса пустой
             $res = $sth->execute();
         } else {

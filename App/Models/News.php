@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Model;
+use App\MultiException;
 
+//use App\MultiException;
 
 /**
  * Модель News для таблицы "news"
@@ -40,8 +42,9 @@ class News extends Model
                 return Author::findById($this->author_id);
                 break;
             default:
-                return null;
+                return $this->data[$k];
         }
+
     }
 
     /**
@@ -64,8 +67,26 @@ class News extends Model
      * @param array $arr - $_POST из формы редактирования
      * @return $this|bool
      */
-    public function setFromForm($arr)
+
+    /**
+     * Получаем из БД столбцы таблицы, на которые наложены ограничение NotNull
+     * @return array
+     */
+    public function getNotNullCol()
     {
+        $arrNotNull = \App\Models\News::getNotNull();
+        $notNullColumn = [];
+        foreach ($arrNotNull as $obj) {
+            $notNullColumn[] = $obj->column_name;
+        }
+        return $notNullColumn;
+    }
+
+    public function fill($arr)
+    {
+        $notNullColumn = $this->getNotNullCol();
+        $e = new MultiException();
+
         foreach ($arr as $k => $v) {
             $k = trim($k);
             $v = trim($v);
@@ -80,12 +101,8 @@ class News extends Model
                         if ($auth) {
                             $this->author_id = $v;
                         } else {
-                            return false;
+                            $e[] = new MultiException('Некорректное значение в поле Автор (автор не существует)');
                         }
-                    }
-
-                    if (!empty($v) && !is_numeric($v)) {
-                        return false;
                     }
 
                     if (empty($v)) {
@@ -94,11 +111,43 @@ class News extends Model
 
                     break;
                 case ('title'):
+                    if (in_array($k, $notNullColumn) && empty($v))
+                    {
+                        $e[] = new MultiException('Поле заголовка не должно быть пустым');
+                    }
+                    $this->$k = $v;
+
+                break;
                 case ('content'):
-                    $this->$k = !empty($v) ? $v : null;
+                    if (in_array($k, $notNullColumn) && empty($v))
+                    {
+                        $e[] = new MultiException('Поле текста не должно быть пустым');
+                    }
+                    $this->$k = $v;
+
                     break;
             }
         }
+        if (!empty($e)) {
+            throw $e;
+        }
         return $this;
     }
+    /*
+     * select column_name nonnull_column from information_schema.columns where table_schema = 'php2' and  table_name = 'news' and   is_nullable = 'NO'
+     * */
+
+
+/*
+    public function fill($data = []) {
+        $e = new MultiException();
+        if (true) {
+            $e[] = new \Exception('Заголовок неверный');
+        }
+        if (true) {
+            $e[] = new \Exception('Текст неверный');
+        }
+        throw $e;
+    }
+*/
 }

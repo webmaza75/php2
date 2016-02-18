@@ -24,8 +24,12 @@ abstract class Model
      */
     public static function findAll()
     {
-        $db = new Db();
-        return $db->query(static::class, 'SELECT * FROM ' . static::TABLE . ';');
+        $db = Db::instance();
+        $res = $db->query(static::class, 'SELECT * FROM ' . static::TABLE . ';');
+        if (!$res) {
+            throw new \App\Exceptions\Err404('Записи не найдены');
+        }
+        return $res;
     }
 
     /**
@@ -35,7 +39,7 @@ abstract class Model
      */
     public static function findById($id)
     {
-        $db = new Db();
+        $db = Db::instance();
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE `id`=:id;';
         $args = [':id' => (int)$id];
         $res = $db->query(static::class, $sql, $args);
@@ -100,6 +104,10 @@ abstract class Model
             // Определяем свойство id объекта
             $this->id = $db->lastInsId();
         }
+        /* else {
+            throw new \App\Exceptions\Db('Новая запись не сохранена, неверный запрос');
+        }
+        */
         return $res;
     }
 
@@ -128,6 +136,11 @@ abstract class Model
         $sql .= implode(', ', $keys) . ' WHERE id=:id;';
         $db = Db::instance();
         $res = $db->execute($sql, $args);
+/*
+        if (!$res) {
+            throw new \App\Exceptions\DB('Запись не обновлена, неверный запрос');
+        }
+*/
         return $res;
     }
 
@@ -137,11 +150,6 @@ abstract class Model
      */
     public function save()
     {
-        // регистронезависимый поиск слова insert в начале строки запроса
-        //$pattern1 = '/^insert\b/i';
-        // регистронезависимый поиск слова update в начале строки запроса
-        //$pattern2 = '/^update\b/i';
-
         if ($this->isNew()) {
             $res = $this->insert();
         } else {
@@ -160,6 +168,23 @@ abstract class Model
         $args[':id'] = $this->id;
         $db = Db::instance();
         $res = $db->execute($sql, $args);
+        if (!$res) {
+            throw new \App\Exceptions\Db('Запись не удалена, неверный запрос');
+        }
+        return $res;
+    }
+
+    /**
+     * Получение полей таблицы, которые по умолчанию NOT NULL
+     * @return array
+     */
+    public static function getNotNull()
+    {
+        $db = Db::instance();
+        $sql = 'select column_name from information_schema.columns where table_schema = \''. $db->getDbName() .'\' and  table_name = \''
+            . static::TABLE . '\' and is_nullable=:is_nullable;';
+        $args[':is_nullable'] = 'NO';
+        $res = $db->query(static::class, $sql, $args);
         return $res;
     }
 }

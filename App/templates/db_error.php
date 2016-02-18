@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Ошибка 404 - не найдено</title>
+    <title>Ошибка БД</title>
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Ошибка 404 - не найдено</h1><br>
+    <h1>Ошибка БД</h1><br>
     <div class="alert alert-danger">
         <?php echo $error; ?>
     </div>

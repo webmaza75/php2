@@ -23,9 +23,4 @@ class News extends Controller
         $this->view->news = \App\Models\News::findById($_GET['id']);
         $this->view->display(__DIR__ . '/../templates/one.php');
     }
-
-    protected function action404()
-    {
-        $this->view->display(__DIR__ . '/../templates/404.php');
-    }
 }
