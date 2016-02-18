@@ -33,11 +33,11 @@ class Admin extends Controller
             $this->view->news = new \App\Models\News();
         } else {
             $this->view->news = \App\Models\News::findById($_GET['id']);
-            /*
+
             if (!$this->view->news) {
                 throw new \App\Exceptions\Err404('Запись не найдена');
             }
-            */
+
         }
         $this->view->display(__DIR__ . '/../templates/admin/edit.php');
     }

@@ -64,11 +64,6 @@ class News extends Model
     }
 
     /**
-     * @param array $arr - $_POST из формы редактирования
-     * @return $this|bool
-     */
-
-    /**
      * Получаем из БД столбцы таблицы, на которые наложены ограничение NotNull
      * @return array
      */
@@ -105,6 +100,11 @@ class News extends Model
                         }
                     }
 
+                    if (!empty($v) && !is_numeric($v)) {
+                        $this->author_id = $arr['author_id'];
+                    }
+
+
                     if (empty($v)) {
                         $this->author_id = null;
                     }
@@ -114,17 +114,17 @@ class News extends Model
                     if (in_array($k, $notNullColumn) && empty($v))
                     {
                         $e[] = new MultiException('Поле заголовка не должно быть пустым');
+                    } else {
+                        $this->$k = $v;
                     }
-                    $this->$k = $v;
-
                 break;
                 case ('content'):
                     if (in_array($k, $notNullColumn) && empty($v))
                     {
                         $e[] = new MultiException('Поле текста не должно быть пустым');
+                    } else {
+                        $this->$k = $v;
                     }
-                    $this->$k = $v;
-
                     break;
             }
         }
@@ -133,21 +133,4 @@ class News extends Model
         }
         return $this;
     }
-    /*
-     * select column_name nonnull_column from information_schema.columns where table_schema = 'php2' and  table_name = 'news' and   is_nullable = 'NO'
-     * */
-
-
-/*
-    public function fill($data = []) {
-        $e = new MultiException();
-        if (true) {
-            $e[] = new \Exception('Заголовок неверный');
-        }
-        if (true) {
-            $e[] = new \Exception('Текст неверный');
-        }
-        throw $e;
-    }
-*/
 }
