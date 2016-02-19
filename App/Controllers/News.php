@@ -21,6 +21,9 @@ class News extends Controller
     protected function actionOne()
     {
         $this->view->news = \App\Models\News::findById($_GET['id']);
+        if (!$this->view->news) {
+            throw new \App\Exceptions\Err404 ('Статья не найдена');
+        }
         $this->view->display(__DIR__ . '/../templates/one.php');
     }
 }
