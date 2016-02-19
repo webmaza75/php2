@@ -35,7 +35,7 @@ class Admin extends Controller
             $this->view->news = \App\Models\News::findById($_GET['id']);
 
             if (!$this->view->news) {
-                throw new \App\Exceptions\Err404('Запись не найдена');
+                throw new \App\Exceptions\Err404('Запись не найдена ');
             }
 
         }
@@ -56,6 +56,7 @@ class Admin extends Controller
             exit;
         } catch (\App\MultiException $e) {
             $this->view->errors = $e;
+            \App\Logger::putArrContent($e);
             $this->view->news = $news;
             $this->view->display(__DIR__ . '/../templates/admin/edit.php');
         }

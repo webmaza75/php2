@@ -42,12 +42,22 @@
             <label class="col-sm-2" for="author">Автор новости</label>
             <div class="col-sm-10">
                 <input class="form-control none-indent" id="author" name="author"
-                     type="text" placeholder="Введите автора"
+                     type="text" placeholder="Введите автора" disabled
                      <?php $str = (empty($news->author)) ? '' : $news->author->name; ?>
                      value="<?php echo $str; ?>">
-                <input type="hidden" id="author_id" name="author_id" value="<?php echo $news->author_id; ?>">
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-2" for="author_id">Id Автора</label>
+            <div class="col-sm-10">
+                <input class="form-control none-indent" id="author_id" name="author_id"
+                       type="text" placeholder="Введите id автора"
+                       value="<?php echo $news->author_id; ?>">
+            </div>
+        </div>
+
+
         <div class="form-group">
             <label class="col-sm-2" for="content">Текст</label>
             <div class="col-sm-10">

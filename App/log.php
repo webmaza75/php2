@@ -1,0 +1,11 @@
+19-02-2016 12:02:00 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
+19-02-2016 12:02:00 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
+19-02-2016 12:02:03 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
+19-02-2016 12:02:03 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
+19-02-2016 12:02:06 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
+19-02-2016 12:02:07 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
+19-02-2016 12:02:09 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
+19-02-2016 12:02:09 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
+19-02-2016 12:02:14 |Такой автор не существует| [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; | [line]: 113; | [code]: 0;
+19-02-2016 12:02:14 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
+19-02-2016 12:02:14 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;

@@ -16,41 +16,31 @@ try {
         // Разбиение URL на массив по символу "/"
         $uri_parts = explode('/', trim($url_path, ' /'));
 
-        $control = array_shift($uri_parts); // имя контроллера
+        $control = array_shift($uri_parts); // alias контроллера
         if (count($uri_parts) >=1) {
-            $action = (array_shift($uri_parts)); // имя action
+            $action = (array_shift($uri_parts)); // alias action
         }
     }
     $ctrl = '\App\Controllers\\' . $control;
 
     if (!class_exists($ctrl)) {
-        throw new \App\Exceptions\Err404('Неверный адрес. Попробуйте еще раз');
+        throw new \App\Exceptions\Err404('Неверный адрес');
     }
     $controller = new $ctrl();
 
     if (!method_exists($controller, 'action' . $action)) {
-        throw new BadMethodCallException('Несуществующий адрес. Попробуйте еще раз');
+        throw new \App\Exceptions\Err404 ('Несуществующий адрес');
     }
-
     $controller->action($action);
 
 } catch (\App\Exceptions\DB $e) {
     $err = new \App\Controllers\Error();
     $err->actionDbError($e->getMessage());
+    \App\Logger::putContent($e->getMess());
 } catch (\App\Exceptions\Err404 $e) {
     $err = new \App\Controllers\Error();
     $err->action404($e->getMessage());
-} catch (\BadMethodCallException $e) {
-    $err = new \App\Controllers\Error();
-    $err->action404($e->getMessage());
+    \App\Logger::putContent($e->getMess());
 }
-
-
-/*
-finally {
-
-*/
-    /*Logger::instance()->save($e->getMessage());*/
-//}
 
 

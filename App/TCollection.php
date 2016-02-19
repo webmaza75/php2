@@ -2,7 +2,11 @@
 
 namespace App;
 
-
+/**
+ * Class TCollection
+ * @package App
+ * @property array $data
+ */
 trait TCollection
 {
     protected $data = [];
@@ -11,10 +15,12 @@ trait TCollection
     {
         return array_key_exists($offset, $this->data[$offset]);
     }
+
     public function offsetGet($offset)
     {
         return $this->data[$offset];
     }
+
     public function offsetSet($offset, $value)
     {
         if ('' == $offset) {
@@ -23,26 +29,32 @@ trait TCollection
             $this->data[$offset] = $value;
         }
     }
+
     public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
     }
+
     public function current()
     {
         return current($this->data);
     }
+
     public function next()
     {
         next($this->data);
     }
+
     public function key()
     {
         return key($this->data);
     }
+
     public function valid()
     {
         return false !== current($this->data);
     }
+
     public function rewind()
     {
         reset($this->data);

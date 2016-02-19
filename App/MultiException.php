@@ -1,7 +1,12 @@
 <?php
 namespace App;
+use App\Exceptions\MyException;
 
-class MultiException extends \Exception
+/**
+ * Class MultiException
+ * @package App
+ */
+class MultiException extends MyException
     implements \ArrayAccess, \Iterator
 {
     use TCollection;

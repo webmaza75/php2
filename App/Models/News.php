@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Exceptions\Err404;
+use App\Exceptions\MyException;
 use App\Model;
 use App\MultiException;
-
-//use App\MultiException;
 
 /**
  * Модель News для таблицы "news"
@@ -21,7 +21,10 @@ class News extends Model
     /**
      * @var array $data Array of Properties
      */
-    protected $data = [];
+    public $id;
+    public $title;
+    public $content;
+    public $author_id;
 
     /**
      * Table name имя таблицы
@@ -42,9 +45,9 @@ class News extends Model
                 return Author::findById($this->author_id);
                 break;
             default:
-                return $this->data[$k];
+                //return $this->$k;
+                return null;
         }
-
     }
 
     /**
@@ -63,6 +66,11 @@ class News extends Model
         }
     }
 
+    public function __set($k, $v)
+    {
+        $this->$k = $v;
+    }
+
     /**
      * Получаем из БД столбцы таблицы, на которые наложены ограничение NotNull
      * @return array
@@ -79,58 +87,36 @@ class News extends Model
 
     public function fill($arr)
     {
-        $notNullColumn = $this->getNotNullCol();
-        $e = new MultiException();
-
         foreach ($arr as $k => $v) {
             $k = trim($k);
             $v = trim($v);
 
-            switch ($k) {
-                case ('id'):
-                    $this->$k = (int)$v;
-                    break;
-                case ('author'):
-                    if (!empty($v) && is_numeric($v)) {
-                        $auth = \App\Models\Author::findById($v);
-                        if ($auth) {
-                            $this->author_id = $v;
-                        } else {
-                            $e[] = new MultiException('Некорректное значение в поле Автор (автор не существует)');
-                        }
-                    }
+            if ('author' == $k) {
+                continue;
+            }
+            $this->{$k} = $v;
+        }
 
-                    if (!empty($v) && !is_numeric($v)) {
-                        $this->author_id = $arr['author_id'];
-                    }
+        // Достаем из БД массив полей с ограничением NotNull
+        $notNullColumn = $this->getNotNullCol();
+        $e = new MultiException();
 
-
-                    if (empty($v)) {
-                        $this->author_id = null;
-                    }
-
-                    break;
-                case ('title'):
-                    if (in_array($k, $notNullColumn) && empty($v))
-                    {
-                        $e[] = new MultiException('Поле заголовка не должно быть пустым');
-                    } else {
-                        $this->$k = $v;
-                    }
-                break;
-                case ('content'):
-                    if (in_array($k, $notNullColumn) && empty($v))
-                    {
-                        $e[] = new MultiException('Поле текста не должно быть пустым');
-                    } else {
-                        $this->$k = $v;
-                    }
-                    break;
+        foreach ($this as $k => $v) {
+            if (in_array($k, $notNullColumn) && (empty($v) || '' == $v) && 'id' != $k)
+            {
+                $e[] = new MyException('Пустое поле ' . $k);
             }
         }
-        if (!empty($e)) {
+        if (!empty($this->author_id)) {
+            $auth = \App\Models\Author::findById($this->author_id);
+            if (!$auth) {
+                $e[] = new Err404 ('Такой автор не существует');
+            }
+        }
+        if (!is_null($e[0])) {
             throw $e;
         }
+
         return $this;
     }
 }

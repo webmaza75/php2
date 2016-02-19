@@ -17,7 +17,7 @@ class Author extends Model
     /**
      * Используется трейт с магическими функциями
      */
-    use MagicFunc;
+   // use MagicFunc;
 
     /**
      * Название таблицы

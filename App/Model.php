@@ -86,7 +86,6 @@ abstract class Model
             if ('id' == $k || 'data' == $k) {
                 continue;
             }
-
             $columns[] = $k;
             $values[':'.$k] = $v;
         }
