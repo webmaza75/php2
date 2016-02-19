@@ -1,11 +1,2 @@
-19-02-2016 12:02:00 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
-19-02-2016 12:02:00 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
-19-02-2016 12:02:03 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
-19-02-2016 12:02:03 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
-19-02-2016 12:02:06 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
-19-02-2016 12:02:07 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
-19-02-2016 12:02:09 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
-19-02-2016 12:02:09 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
-19-02-2016 12:02:14 |Такой автор не существует| [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; | [line]: 113; | [code]: 0;
-19-02-2016 12:02:14 |Несуществующий адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 32; | [code]: 0;
-19-02-2016 12:02:14 |Неверный адрес| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 27; | [code]: 0;
+19-02-2016 13:02:23 |Несуществующий адрес $_SERVER['REQUEST_URI']:/admin/js/bootstrap.min.js| $ctrl: \App\Controllers\adminЭкшен: actionjs| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 35; | [code]: 0;
+19-02-2016 13:02:23 |Неверный адрес $_SERVER['REQUEST_URI']:/favicon.ico| $ctrl: \App\Controllers\favicon.ico| [file]: D:\OpenServer\domains\php2.local\index.php; | [line]: 29; | [code]: 0;

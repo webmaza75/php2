@@ -17,19 +17,22 @@ try {
         $uri_parts = explode('/', trim($url_path, ' /'));
 
         $control = array_shift($uri_parts); // alias контроллера
+        //echo $control; die;
         if (count($uri_parts) >=1) {
             $action = (array_shift($uri_parts)); // alias action
         }
     }
     $ctrl = '\App\Controllers\\' . $control;
+    //echo $ctrl; die;
 
     if (!class_exists($ctrl)) {
-        throw new \App\Exceptions\Err404('Неверный адрес');
+        throw new \App\Exceptions\Err404('Неверный адрес ' . '$_SERVER[\'REQUEST_URI\']:' . $_SERVER['REQUEST_URI'] . '| $ctrl: ' . $ctrl);
     }
+
     $controller = new $ctrl();
 
     if (!method_exists($controller, 'action' . $action)) {
-        throw new \App\Exceptions\Err404 ('Несуществующий адрес');
+        throw new \App\Exceptions\Err404 ('Несуществующий адрес '. '$_SERVER[\'REQUEST_URI\']:' . $_SERVER['REQUEST_URI'] . '| $ctrl: ' . $ctrl .'Экшен: '. 'action' . $action );
     }
     $controller->action($action);
 
