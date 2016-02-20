@@ -42,6 +42,8 @@ class Db
         $param3 = $config->data['db']['pass'];
         try {
             $this->dbh = new \PDO($param1, $param2, $param3);
+            //Добавлены аттрибуты подключения (режимы выброса исключений)
+            $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             throw new \App\Exceptions\DB('Некорректные параметры подключения к БД');
         }
@@ -60,6 +62,9 @@ class Db
     public function execute($sql, $args = [])
     {
         $sth = $this->dbh->prepare($sql);
+        if (!$sth) {
+            throw new \App\Exceptions\DB('Неверный запрос к БД');
+        }
         if (!$args) { // если массив с параметрами для запроса пустой
             $res = $sth->execute();
         } else {
@@ -78,7 +83,9 @@ class Db
     public function query($class, $sql, $args = [])
     {
         $sth = $this->dbh->prepare($sql);
-
+        if (!$sth) {
+            throw new \App\Exceptions\DB('Неверный запрос к БД');
+        }
         if (!$args) { // если массив с параметрами для запроса пустой
             $res = $sth->execute();
         } else {

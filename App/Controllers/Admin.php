@@ -16,12 +16,18 @@ class Admin extends Controller
     protected function actionIndex()
     {
         $this->view->news = \App\Models\News::findAll();
+         if (!$this->view->news) {
+             throw new \App\Exceptions\Err404 ('Новости не найдены');
+         }
         $this->view->display(__DIR__ . '/../templates/admin/news.php');
     }
 
     protected function actionDelete()
     {
         $news = \App\Models\News::findById($_GET['id']);
+        if (!$news) {
+            throw new \App\Exceptions\Err404 ('Новость не найдена');
+        }
         $news->delete();
         header('Location: /admin/index');
         exit;
@@ -35,9 +41,8 @@ class Admin extends Controller
             $this->view->news = \App\Models\News::findById($_GET['id']);
 
             if (!$this->view->news) {
-                throw new \App\Exceptions\Err404('Запись не найдена ');
+                throw new \App\Exceptions\Err404 ('Новость не найдена');
             }
-
         }
         $this->view->display(__DIR__ . '/../templates/admin/edit.php');
     }
@@ -47,6 +52,9 @@ class Admin extends Controller
         try {
             if (isset($_POST['id'])) {
                 $news = \App\Models\News::findById($_POST['id']);
+                if (!$news) {
+                    throw new \App\Exceptions\Err404 ('Новость не найдена');
+                }
             } else {
                 $news = new \App\Models\News();
             }
