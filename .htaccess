@@ -9,9 +9,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # спасибо Альберту, favicon перестал подключаться и выдавать ошибку
 RewriteCond %{REQUEST_FILENAME} !-l
-
-# не работает, т.к. js/bootstrap.min.js - это файл, а ведь по идее могло бы...
-#RewriteRule ^(.*)/js/(.*)$ $1
-#RewriteRule /js/bootstrap.min.js /
+RewriteCond %{REQUEST_URI} !=/favicon.ico
 
 RewriteRule ^(.*)$ index.php [QSA]
