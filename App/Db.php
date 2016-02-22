@@ -61,14 +61,16 @@ class Db
      */
     public function execute($sql, $args = [])
     {
-        $sth = $this->dbh->prepare($sql);
-        if (!$sth) {
+        try {
+            $sth = $this->dbh->prepare($sql);
+
+            if (!$args) { // если массив с параметрами для запроса пустой
+                $res = $sth->execute();
+            } else {
+                $res = $sth->execute($args);
+            }
+        } catch (\PDOException $e) {
             throw new \App\Exceptions\DB('Неверный запрос к БД');
-        }
-        if (!$args) { // если массив с параметрами для запроса пустой
-            $res = $sth->execute();
-        } else {
-            $res = $sth->execute($args);
         }
         return $res;
     }
@@ -82,14 +84,15 @@ class Db
      */
     public function query($class, $sql, $args = [])
     {
-        $sth = $this->dbh->prepare($sql);
-        if (!$sth) {
+        try {
+            $sth = $this->dbh->prepare($sql);
+            if (!$args) { // если массив с параметрами для запроса пустой
+                $res = $sth->execute();
+            } else {
+                $res = $sth->execute($args);
+            }
+        } catch (\PDOException $e) {
             throw new \App\Exceptions\DB('Неверный запрос к БД');
-        }
-        if (!$args) { // если массив с параметрами для запроса пустой
-            $res = $sth->execute();
-        } else {
-            $res = $sth->execute($args);
         }
 
         if(false !== $res) {

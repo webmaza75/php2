@@ -26,9 +26,6 @@ abstract class Model
     {
         $db = Db::instance();
         $res = $db->query(static::class, 'SELECT * FROM ' . static::TABLE . ';');
-       // if (!$res) {
-            //throw new \App\Exceptions\Err404('Записи не найдены');
-        //}
         return $res;
     }
 
@@ -103,10 +100,6 @@ abstract class Model
             // Определяем свойство id объекта
             $this->id = $db->lastInsId();
         }
-        //else {
-           // throw new \App\Exceptions\Db('Новая запись не сохранена, неверный запрос');
-        //}
-
         return $res;
     }
 
@@ -135,11 +128,6 @@ abstract class Model
         $sql .= implode(', ', $keys) . ' WHERE id=:id;';
         $db = Db::instance();
         $res = $db->execute($sql, $args);
-
-        //if (!$res) {
-           // throw new \App\Exceptions\DB('Запись не обновлена, неверный запрос');
-        //}
-
         return $res;
     }
 
@@ -167,9 +155,6 @@ abstract class Model
         $args[':id'] = $this->id;
         $db = Db::instance();
         $res = $db->execute($sql, $args);
-        //if (!$res) {
-            //throw new \App\Exceptions\Db('Запись не удалена, неверный запрос');
-       // }
         return $res;
     }
 
