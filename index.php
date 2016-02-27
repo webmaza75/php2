@@ -24,24 +24,30 @@ try {
     $ctrl = '\App\Controllers\\' . $control;
 
     if (!class_exists($ctrl)) {
-        throw new \App\Exceptions\Err404('Неверный адрес ' . '$_SERVER[\'REQUEST_URI\']:' . $_SERVER['REQUEST_URI'] . '| $ctrl: ' . $ctrl);
+        $e =  new \App\Exceptions\Err404('Неверный адрес ');
+        $e->setExtParams(['uri' => $_SERVER['REQUEST_URI'], 'ctrl' => $ctrl]);
+        throw $e;
     }
 
     $controller = new $ctrl();
 
     if (!method_exists($controller, 'action' . $action)) {
-        throw new \App\Exceptions\Err404 ('Несуществующий адрес '. '$_SERVER[\'REQUEST_URI\']:' . $_SERVER['REQUEST_URI'] . '| $ctrl: ' . $ctrl .'Экшен: '. 'action' . $action );
+        $e = new \App\Exceptions\Err404 ('Несуществующий адрес ');
+        $e->setExtParams(['uri' => $_SERVER['REQUEST_URI'], 'ctrl' => $ctrl, 'act' => $action]);
+        throw $e;
     }
     $controller->action($action);
 
 } catch (\App\Exceptions\DB $e) {
     $err = new \App\Controllers\Error();
     $err->actionDbError($e->getMessage());
-    \App\Logger::putContent($e->getMess());
+    $logger = new \App\LogUseLib;
+    $logger->emergency($e->getMessage(), $e->getMess());
 } catch (\App\Exceptions\Err404 $e) {
     $err = new \App\Controllers\Error();
     $err->action404($e->getMessage());
-    \App\Logger::putContent($e->getMess());
+    $logger = new \App\LogUseLib;
+    $logger->alert($e->getMessage(), $e->getMess());
 }
 
 

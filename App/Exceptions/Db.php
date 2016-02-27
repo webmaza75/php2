@@ -3,10 +3,9 @@
 namespace App\Exceptions;
 
 /**
- * Class Db использует трейт вывода сообщения об ошибки в строку
+ * Class Db ошибки БД
  * @package App\Exceptions
  */
 class Db extends MyException
 {
-   // use toString;
 }

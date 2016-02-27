@@ -1,23 +1,32 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: user
- * Date: 19.02.2016
- * Time: 10:03
- */
 
 namespace App\Exceptions;
 
+use App\MagicFunc;
 
+/**
+ * Class MyException
+ * @package App\Exceptions
+ * @property array $data
+ */
 class MyException extends \Exception
 {
-    use toString;
+    use MagicFunc;
 
     public function getMess()
     {
-        return $this->getMessage()
-        . '| [file]: ' . $this->getFile() . '; | '
-        . '[line]: ' . $this->getLine() . '; | '
-        . '[code]: ' . $this->getCode() . ";\n";
+        $this->data['file'] = $this->getFile();
+        $this->data['line'] = $this->getLine();
+        $this->data['code'] = $this->getCode();
+        return $this->data;
+    }
+
+    public function setExtParams($arr = [])
+    {
+        if (!empty($arr)) {
+            foreach ($arr as $k => $v) {
+                $this->data[$k] = $v;
+            }
+        }
     }
 }

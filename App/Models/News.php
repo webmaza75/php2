@@ -37,7 +37,6 @@ class News extends Model
      * @param $k
      * @return mixed (null|object)
      */
-
     public function __get($k)
     {
         switch ($k) {

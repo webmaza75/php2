@@ -35,7 +35,8 @@
         <div class="form-group">
             <label class="col-sm-2" for="title">Заголовок</label>
             <div class="col-sm-10">
-              <input class="form-control" id="title" name="title" type="text" placeholder="Введите заголовок" value="<?php echo $news->title; ?>" >
+              <input class="form-control" id="title" name="title" type="text"
+                     placeholder="Введите заголовок" value="<?php echo $news->title; ?>" >
             </div>
         </div>
         <div class="form-group">
@@ -61,7 +62,8 @@
         <div class="form-group">
             <label class="col-sm-2" for="content">Текст</label>
             <div class="col-sm-10">
-              <textarea class="form-control" id=content" name="content" cols="100" rows="10" placeholder="Введите текст" ><?php echo $news->content; ?></textarea>
+              <textarea class="form-control" id=content" name="content"
+                        cols="100" rows="10" placeholder="Введите текст" ><?php echo $news->content; ?></textarea>
             </div>
         </div>
         <div class="form-group">

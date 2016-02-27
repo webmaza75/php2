@@ -46,10 +46,10 @@
             <?php endif; ?>
 
             <div class="pull-right">
-                <a class="btn btn-sm btn-primary" aria-label="Left Align" href="/admin/edit?id=<?php echo $item->id; ?>">
+                <a class="btn btn-sm btn-primary" href="/admin/edit?id=<?php echo $item->id; ?>">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" aria-label="Left Align" href="/admin/delete?id=<?php echo $item->id; ?>">
+                <a class="btn btn-sm btn-danger" href="/admin/delete?id=<?php echo $item->id; ?>">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
             </div>

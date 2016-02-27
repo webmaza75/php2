@@ -1,0 +1,15 @@
+{
+    "require": {
+        "psr/log": "dev-master",
+        "webmaza75/lib": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/webmaza75/lib"
+        }
+    ],
+    "preferred-install": "dev",
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

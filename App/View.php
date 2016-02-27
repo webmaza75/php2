@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App;
 
 /**
@@ -56,7 +55,8 @@ class View implements \Countable, \ArrayAccess
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->data[] = $value;
         } else {
@@ -69,7 +69,8 @@ class View implements \Countable, \ArrayAccess
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->data[$offset]);
     }
 
@@ -77,7 +78,8 @@ class View implements \Countable, \ArrayAccess
      * Удаляет смещение
      * @param mixed $offset
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->data[$offset]);
     }
 
@@ -86,7 +88,8 @@ class View implements \Countable, \ArrayAccess
      * @param mixed $offset
      * @return null
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
 }

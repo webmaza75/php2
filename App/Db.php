@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App;
 
 use App;
@@ -42,10 +41,10 @@ class Db
         $param3 = $config->data['db']['pass'];
         try {
             $this->dbh = new \PDO($param1, $param2, $param3);
-            //Добавлены аттрибуты подключения (режимы выброса исключений)
+            //Добавлены атрибуты подключения (режимы выброса исключений)
             $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
-            throw new \App\Exceptions\DB('Некорректные параметры подключения к БД');
+            throw new \App\Exceptions\DB('Некорректные параметры подключения к БД ');
         }
     }
     public function getDbName()
@@ -70,7 +69,9 @@ class Db
                 $res = $sth->execute($args);
             }
         } catch (\PDOException $e) {
-            throw new \App\Exceptions\DB('Неверный запрос к БД');
+            $e = new \App\Exceptions\DB('Неверный запрос к БД ');
+            $e->setExtParams(['sql' => $sql]);
+            throw $e;
         }
         return $res;
     }
@@ -92,7 +93,9 @@ class Db
                 $res = $sth->execute($args);
             }
         } catch (\PDOException $e) {
-            throw new \App\Exceptions\DB('Неверный запрос к БД');
+            $e = new \App\Exceptions\DB('Неверный запрос к БД ');
+            $e->setExtParams(['sql' => $sql]);
+            throw $e;
         }
 
         if(false !== $res) {

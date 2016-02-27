@@ -3,22 +3,14 @@
 namespace App\Models;
 
 use App\Model;
-use App\MagicFunc;
 
 /**
  * Модель Author для таблицы "authors"
+ * Class Author
  * @package App\Models
- *
- * @property integer $id
- * @property string $name
  */
 class Author extends Model
 {
-    /**
-     * Используется трейт с магическими функциями
-     */
-   // use MagicFunc;
-
     /**
      * Название таблицы
      */

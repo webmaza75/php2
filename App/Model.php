@@ -80,7 +80,7 @@ abstract class Model
         $columns = [];
         $values = [];
         foreach ($this as $k => $v) {
-            if ('id' == $k || 'data' == $k) {
+            if ('id' == $k) {
                 continue;
             }
             $columns[] = $k;

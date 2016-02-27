@@ -1,14 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: user
- * Date: 19.02.2016
- * Time: 9:12
- */
 
 namespace App\Exceptions;
 
-
+/**
+ * Trait toString используется для логирования исключений
+ * @package App\Exceptions
+ */
 trait toString
 {
     public function toString()
