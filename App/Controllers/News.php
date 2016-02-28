@@ -18,7 +18,7 @@ class News extends Controller
         if (!$this->view->news) {
             throw new \App\Exceptions\Err404 ('Новости не найдены ');
         }
-        $this->view->display(__DIR__ . '/../templates/index.php');
+        $this->view->displayTwig('index.twig', ['news' => $this->view->news]);
     }
 
     protected function actionOne()
@@ -27,6 +27,6 @@ class News extends Controller
         if (!$this->view->news) {
             throw new \App\Exceptions\Err404 ('Новость не найдена ');
         }
-        $this->view->display(__DIR__ . '/../templates/one.php');
+        $this->view->displayTwig('one.twig', ['item' => $this->view->news]);
     }
 }

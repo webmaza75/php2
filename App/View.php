@@ -38,6 +38,23 @@ class View implements \Countable, \ArrayAccess
         echo $this->render($template);
     }
 
+    public function renderTwig($layout, $params = [])
+    {
+        $loader = new \Twig_Loader_Filesystem([
+            str_replace('\\', '/', __DIR__ . '/layouts'),
+            str_replace('\\', '/', __DIR__ . '/templates')
+        ]);
+        $twig = new \Twig_Environment($loader, ['cache' => false]);
+        $content = $twig->render($layout, $params);
+        return $content;
+    }
+
+    public function displayTwig($layout, $params = [])
+    {
+        echo $this->renderTwig($layout, $params);
+    }
+
+
     /**
      * Count elements of an object
      * @link http://php.net/manual/en/countable.count.php
