@@ -2,9 +2,14 @@
 
 namespace App;
 
+use App\Exceptions\MyException;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerTrait;
 
+/**
+ * Class LogUseLib использование внешнего пакета Psr/Log
+ * @package App
+ */
 class LogUseLib extends AbstractLogger
 {
     use LoggerTrait;
@@ -29,4 +34,15 @@ class LogUseLib extends AbstractLogger
         return $cont . "\n";
     }
 
+    /**
+     * Для мультиисключения
+     * @param array $e
+     * @var MyException $error
+     */
+    public function getArrMess($e)
+    {
+        foreach ($e as $error) {
+            $this->alert($error->getMessage(), $error->getMess());
+        }
+    }
 }
