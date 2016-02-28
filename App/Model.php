@@ -90,7 +90,7 @@ abstract class Model
             INSERT INTO ' . static::TABLE . '
             (' . implode(',', $columns) . ')
             VALUES
-            (' . implode(',', array_keys($values)) . ')
+            (' . implode(',', array_keys($values)) . ');
         ';
 
         $db = Db::instance();

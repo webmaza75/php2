@@ -14,4 +14,4 @@ emergency | 26-02-2016 23:02:31 |Неверный запрос к БД [sql]:
 emergency | 26-02-2016 23:02:29 |Неверный запрос к БД [sql]: INSERT INTO news SET title=:title, content=:content, author_id=:author_id WHERE id=:id;; [file]: D:\OpenServer\domains\php2.local\App\Db.php; [line]: 72; [code]: 0; 
 alert | 27-02-2016 22:02:58 |Проверка данных: пустое поле заголовка [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 107; [code]: 0; 
 alert | 27-02-2016 22:02:58 |Проверка данных: пустое поле текста новости [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 107; [code]: 0; 
-alert | 27-02-2016 22:02:58 |Проверка данных: такой автор не существует [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 113; [code]: 0; 
+alert | 27-02-2016 22:02:58 |Проверка данных: такой автор не существует [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 113; [code]: 0;
