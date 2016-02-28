@@ -95,6 +95,7 @@ class News extends Model
             }
             $this->{$k} = $v;
         }
+        $this->author_id = (!empty($this->author_id)) ? $this->author_id : null;
 
         // Достаем из БД массив полей с ограничением NotNull
         $notNullColumn = $this->getNotNullCol();
@@ -116,7 +117,6 @@ class News extends Model
         if (!is_null($e[0])) {
             throw $e;
         }
-
         return $this;
     }
 }
