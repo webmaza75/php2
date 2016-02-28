@@ -44,7 +44,10 @@ class Db
             //Добавлены атрибуты подключения (режимы выброса исключений)
             $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
-            throw new \App\Exceptions\DB('Некорректные параметры подключения к БД ');
+            $mailer = new \App\SwMailer();
+            $res = $mailer->sendMail('Проблемы БД', 'Потеря соединения с БД', 1);
+            $msg = (!$res) ? 'Неудачная попытка оповещения администратора': 'Администратор оповещен';
+            throw new \App\Exceptions\DB('Некорректные параметры подключения к БД. ' . $msg . ' ');
         }
     }
     public function getDbName()

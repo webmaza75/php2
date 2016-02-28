@@ -15,3 +15,4 @@ emergency | 26-02-2016 23:02:29 |Неверный запрос к БД [sql]: IN
 alert | 27-02-2016 22:02:58 |Проверка данных: пустое поле заголовка [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 107; [code]: 0; 
 alert | 27-02-2016 22:02:58 |Проверка данных: пустое поле текста новости [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 107; [code]: 0; 
 alert | 27-02-2016 22:02:58 |Проверка данных: такой автор не существует [file]: D:\OpenServer\domains\php2.local\App\Models\News.php; [line]: 113; [code]: 0;
+emergency | 28-02-2016 21:02:44 |Некорректные параметры подключения к БД. Администратор оповещен [file]: D:\OpenServer\domains\php2.local\App\Db.php; [line]: 50; [code]: 0; 
