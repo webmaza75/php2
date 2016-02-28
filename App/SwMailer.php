@@ -2,6 +2,13 @@
 
 namespace App;
 
+/**
+ * Class SwMailer использование пакета SwiftMailer для отправки почты
+ * @package App
+ * @property string $subject
+ * @property string $body
+ * @property string $priority default = 3 (normal) if = 1 highest
+ */
 class SwMailer
 {
     public function setMessage($subject, $body, $priority)
