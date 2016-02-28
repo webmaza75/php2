@@ -24,6 +24,14 @@
         <?php echo $error; ?>
     </div>
 </div>
+<br><br>
+<div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <p class="text-center"><strong>Время | память:</strong> <?php echo $time; ?></p>
+        </div>
+    </nav>
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>

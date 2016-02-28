@@ -18,8 +18,8 @@ class View implements \Countable, \ArrayAccess
      */
     public function render($template)
     {
+        $time = \PHP_Timer::resourceUsage();
         ob_start();
-
         foreach ($this as $prop => $value) {
             $$prop = $value;
         }
@@ -40,6 +40,8 @@ class View implements \Countable, \ArrayAccess
 
     public function renderTwig($layout, $params = [])
     {
+        $time = \PHP_Timer::resourceUsage();
+        $params['time'] = $time;
         $loader = new \Twig_Loader_Filesystem([
             str_replace('\\', '/', __DIR__ . '/layouts'),
             str_replace('\\', '/', __DIR__ . '/templates')
