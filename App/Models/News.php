@@ -98,18 +98,19 @@ class News extends Model
 
         // Достаем из БД массив полей с ограничением NotNull
         $notNullColumn = $this->getNotNullCol();
-        $e = new MultiException();
+        $e = new \Lib\MultiException();
 
         foreach ($this as $k => $v) {
             if (in_array($k, $notNullColumn) && (empty($v) || '' == $v) && 'id' != $k)
             {
-                $e[] = new MyException('Пустое поле ' . $k);
+                $msg = ('title' == $k) ? 'заголовка' : 'текста новости';
+                $e[] = new MyException('Проверка данных: пустое поле ' . $msg . ' ');
             }
         }
         if (!empty($this->author_id)) {
             $auth = \App\Models\Author::findById($this->author_id);
             if (!$auth) {
-                $e[] = new Err404 ('Такой автор не существует');
+                $e[] = new Err404 ('Проверка данных: такой автор не существует ');
             }
         }
         if (!is_null($e[0])) {

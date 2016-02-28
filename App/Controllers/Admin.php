@@ -61,9 +61,10 @@ class Admin extends Controller
             $news->save();
             header('Location: /admin/index');
             exit;
-        } catch (\App\MultiException $e) {
+        } catch (\Lib\MultiException $e) {
             $this->view->errors = $e;
-            \App\Logger::putArrContent($e);
+            $logger = new \App\LogUseLib();
+            $logger->getArrMess($e);
             $this->view->news = $news;
             $this->view->display(__DIR__ . '/../templates/admin/edit.php');
         }
