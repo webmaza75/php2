@@ -1,14 +1,17 @@
 {
-    "require": {
-        "psr/log": "dev-master",
-        "webmaza75/lib": "dev-master"
-    },
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/webmaza75/lib"
+            "url": "https://github.com/webmaza75/lib.git"
         }
     ],
+    "require": {
+        "psr/log": "dev-master",
+        "webmaza75/lib": "dev-master",
+        "twig/twig": "^1.24",
+        "swiftmailer/swiftmailer": ">=5.4",
+        "phpunit/php-timer": "~1.0"
+    },
     "preferred-install": "dev",
     "minimum-stability": "dev",
     "prefer-stable": true
