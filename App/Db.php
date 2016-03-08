@@ -120,7 +120,7 @@ class Db
         $startNum = ($page - 1) * $count;
         $endNum = $page * $count;
         for ($i = $startNum; $i < $endNum; $i++) {
-            $value = $sth->fetch();
+            $value = $sth->fetch(\PDO::FETCH_OBJ, \PDO::FETCH_ORI_ABS, $i);
             if (false !== $value) {
                 yield $i => $value;
             } else {
@@ -135,10 +135,10 @@ class Db
      * @return array
      * @throws Exceptions\DB
      */
-    public function queryEach($sql, $args = [])
+    public function queryEach($class, $sql, $args = [])
     {
         try {
-            $sth = $this->dbh->prepare($sql);
+            $sth = $this->dbh->prepare($sql, [\PDO::ATTR_CURSOR => \PDO::CURSOR_SCROLL]);
             if (!$args) { // если массив с параметрами для запроса пустой
                 $res = $sth->execute();
             } else {
@@ -153,7 +153,7 @@ class Db
         if (false !== $res) {
             $arr = [];
 
-            foreach ($this->generate($sth) as $each => $val) {
+            foreach ($this->generate($sth, 2, 3) as $each => $val) {
                 $arr[$each] = $val;
             }
             return $arr;
