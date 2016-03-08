@@ -12,6 +12,7 @@ use App\Controller;
  */
 class Admin extends Controller
 {
+    /*
     protected function actionIndex()
     {
         $this->view->news = \App\Models\News::findAll();
@@ -19,6 +20,27 @@ class Admin extends Controller
              throw new \App\Exceptions\Err404 ('Новости не найдены ');
          }
         $this->view->display(__DIR__ . '/../templates/admin/news.php');
+    }
+    */
+    protected function actionIndex()
+    {
+        $news = \App\Models\News::findAll();
+        $dataTable = new \App\AdminDataTable(
+            $news,
+            [
+                function ($article) {
+                    return $article->id;
+                },
+                function ($article) {
+                    return $article->title;
+                },
+                function ($article) {
+                    return $article->author->name;
+                }
+            ]
+        );
+        $this->view->news = $dataTable->render();
+        $this->view->display(__DIR__ . '/../templates/admin/table.php');
     }
 
     protected function actionDelete()
