@@ -109,27 +109,6 @@ class Db
     }
 
     /**
-     * Генератор для реализации пагинации
-     * @param $sth
-     * @param int $page номер страницы
-     * @param int $count количество новостей на странице
-     * @return \Generator
-     */
-    public function generate($sth, $page = 1, $count = 10)
-    {
-        $startNum = ($page - 1) * $count;
-        $endNum = $page * $count;
-        for ($i = $startNum; $i < $endNum; $i++) {
-            $value = $sth->fetch(\PDO::FETCH_OBJ, \PDO::FETCH_ORI_ABS, $i);
-            if (false !== $value) {
-                yield $i => $value;
-            } else {
-                break;
-            }
-        }
-    }
-
-    /**
      * @param $sql
      * @param array $args
      * @return array
@@ -138,7 +117,7 @@ class Db
     public function queryEach($class, $sql, $args = [])
     {
         try {
-            $sth = $this->dbh->prepare($sql, [\PDO::ATTR_CURSOR => \PDO::CURSOR_SCROLL]);
+            $sth = $this->dbh->prepare($sql);
             if (!$args) { // если массив с параметрами для запроса пустой
                 $res = $sth->execute();
             } else {
@@ -151,14 +130,13 @@ class Db
         }
 
         if (false !== $res) {
-            $arr = [];
 
-            foreach ($this->generate($sth, 2, 3) as $each => $val) {
-                $arr[$each] = $val;
-            }
-            return $arr;
+            while( $row = $sth->fetch()) {
+                yield $row;
+            };
+            yield false;
         }
-        return [];
+        //return [];
     }
 
     /**
