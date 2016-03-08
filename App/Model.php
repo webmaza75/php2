@@ -46,6 +46,14 @@ abstract class Model
         return $res[0]; // возвращаем сразу объект
     }
 
+    public static function findAllUseGen()
+    {
+        $db = Db::instance();
+        $res = $db->queryEach(static::class, 'SELECT * FROM ' . static::TABLE . ';');
+        return $res;
+    }
+
+
     /**
      * Получение последних ($limit) записей (сортировка по id)
      * @param integer $limit необходимое количество записей

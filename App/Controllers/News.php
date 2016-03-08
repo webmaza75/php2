@@ -12,6 +12,7 @@ use App\Controller;
  */
 class News extends Controller
 {
+    /*
     protected function actionIndex()
     {
         $this->view->news = \App\Models\News::findAll();
@@ -20,6 +21,7 @@ class News extends Controller
         }
         $this->view->displayTwig('index.twig', ['news' => $this->view->news]);
     }
+    */
 
     protected function actionOne()
     {
@@ -28,5 +30,18 @@ class News extends Controller
             throw new \App\Exceptions\Err404 ('Новость не найдена ');
         }
         $this->view->displayTwig('one.twig', ['item' => $this->view->news]);
+    }
+
+    /**
+     * использование генератора
+     * @throws \App\Exceptions\Err404
+     */
+    protected function actionIndex()
+    {
+        $this->view->news = \App\Models\News::findAllUseGen();
+        if (!$this->view->news) {
+            throw new \App\Exceptions\Err404 ('Новости не найдены ');
+        }
+        $this->view->displayTwig('index.twig', ['news' => $this->view->news]);
     }
 }

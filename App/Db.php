@@ -109,6 +109,59 @@ class Db
     }
 
     /**
+     * Генератор для реализации пагинации
+     * @param $sth
+     * @param int $page номер страницы
+     * @param int $count количество новостей на странице
+     * @return \Generator
+     */
+    public function generate($sth, $page = 1, $count = 10)
+    {
+        $startNum = ($page - 1) * $count;
+        $endNum = $page * $count;
+        for ($i = $startNum; $i < $endNum; $i++) {
+            $value = $sth->fetch();
+            if (false !== $value) {
+                yield $i => $value;
+            } else {
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param $sql
+     * @param array $args
+     * @return array
+     * @throws Exceptions\DB
+     */
+    public function queryEach($sql, $args = [])
+    {
+        try {
+            $sth = $this->dbh->prepare($sql);
+            if (!$args) { // если массив с параметрами для запроса пустой
+                $res = $sth->execute();
+            } else {
+                $res = $sth->execute($args);
+            }
+        } catch (\PDOException $e) {
+            $e = new \App\Exceptions\DB('Неверный запрос к БД ');
+            $e->setExtParams(['sql' => $sql]);
+            throw $e;
+        }
+
+        if (false !== $res) {
+            $arr = [];
+
+            foreach ($this->generate($sth) as $each => $val) {
+                $arr[$each] = $val;
+            }
+            return $arr;
+        }
+        return [];
+    }
+
+    /**
      * Получаем id последней вставленной в БД записи
      * @return string
      */
@@ -116,4 +169,5 @@ class Db
     {
         return $this->dbh->lastInsertId();
     }
+
 }
